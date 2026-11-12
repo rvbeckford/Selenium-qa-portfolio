@@ -20,6 +20,8 @@ def driver(request):
         "profile.password_manager_leak_detection": False,
     })
     options.add_argument("--disable-save-password-bubble")
+    if os.environ.get("CI"):
+        options.add_argument("--headless==new")
     driver = webdriver.Chrome(options=options)
     yield driver
     report = getattr(request.node, "rep_call", None)
